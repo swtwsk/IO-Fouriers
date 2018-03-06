@@ -1,7 +1,7 @@
 LAB1 : 27.02.2018:
 Wymagania:
  - Git/Mercurial/etc
- - backtracker (BackZilla, etc.)
+ - backtracker (BackZilla, Trello, Redmine, Mantis, Gira, etc.)
  
 Dokumenty:
  - plakat
@@ -18,4 +18,43 @@ mail - od jednej osoby
 LAB2 : 06.03.2018:
 Dokumenty:
   - formy bezosobowe
+  - zawsze: 
+      - tytuł,
+      - data ostatniej modyfikacji + czas/nr wersji (wewnątrz dokumentu),
+  - dokumenty techniczne mają mieć precyzyjne stwierdzenia i mnóstwo powtórzeń
+      (jeżeli w jednym miejscu mamy rzecz A, to w drugim też musi być rzecz A,
+       bo inaczej konfunduje to czytelnika (rzecz A != rzecz B))
+  - dokładna specyfikacja na za dwa tygodnie, na za tydzień draft projektu
+      (kategorie + dokladny opis jakiejs 1-2 rzeczy z kategorii)
+  - wszystko trzymamy w Gicie, także dokumenty
+  - spellcheckujemy i sprawdzamy stylistykę przed oddaniem (także za pomocą
+      człowieka, najlepiej nie-autora)
   
+  SPECYFIKACJA DOKLADNA:
+      - założenia pozytywne ORAZ negatywne (jakie pliki można obsłużyć, czego
+        aplikacja nie może robić, czy można zapisywać odebrane etc.)
+      - założenia wydajnościowe (czas odpowiedzi, czas działania, etc.)
+      - założenia pojemnościowe (ile maks urządzeń, ile maks plików, etc.)
+      - jak używamy jakiegoś algorytmu, to też wpisujemy go w zalozeniach
+        wydajnosciowych i pojemnosciowych (bo np. zlozonosc algosa nie pozwala
+        na dluzsze teksty czy cos)
+      - wymagania dot. bezpieczenstwa i poufnosci (logowanie haslem, przesylanie 
+        newralgicznych danych zgodnie z Ustawa o danych osobowych)
+      - wymagania dot. dostepnosci systemu (np. system moze byc niedostepny dla
+        uzytkownikow maksymalnie przez godzine w roku (dla banku np.) albo przez
+        poltorej godziny kazdej nocy (vide PKP XD))
+      - wymagania dot. awaryjnosci (np. wymaganie, zeby stal drugi serwer 
+        backupowy)
+      - wymagania dot. czcionek/kolorow/loga, tj. wszelakie rzeczy związane
+        z designem (niektórzy klienci (szczególnie więksi) mają je precyzyjne,
+        bo #branding)
+      - wymagania dot. backupów, ciągłości działania, etc.
+      - wymagania dot. sprzętu (np. mobilna, ale najlepiej używa się na 
+        tablecie), oprogramowania, systemu (np. Windows w wersji co najmniej XP,
+        strona działa poprawnie na Firefoxie w wersji co najmniej n i Microsoft
+        Internet Explorer do roku 2003)
+      - wymagania dot. interfejsu
+      - kategorie powinny mieć numerki i potem podwymagania też, żeby łatwiej
+        było o nich potem dyskutować
+      - specyfikacja ma dotyczyć CAŁEGO projektu, a nie tylko tego podzbioru,
+        który uda nam się zrobić
