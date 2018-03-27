@@ -1,0 +1,6 @@
+# local tex files
+*.log
+*.aux
+*.out
+*.toc
+*.synctex.gz
