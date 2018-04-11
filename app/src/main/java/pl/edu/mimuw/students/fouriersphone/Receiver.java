@@ -2,6 +2,6 @@ package pl.edu.mimuw.students.fouriersphone;
 
 public class Receiver {
     public static String run() {
-        return "Shalom";
+        return "Ram pam pam";
     }
 }
