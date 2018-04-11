@@ -4,7 +4,6 @@
 *.out
 *.toc
 *.synctex.gz
-*.iml
 .gradle
 /local.properties
 /.idea/workspace.xml
