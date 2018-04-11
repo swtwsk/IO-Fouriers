@@ -1,0 +1,121 @@
+\documentclass{article}
+
+% SETTINGS %
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{titlesec}
+\usepackage[bookmarks=true,hidelinks]{hyperref}
+
+\newcommand{\sectionbreak}{\clearpage}
+\newcommand{\documentdate}{23 marca 2018}
+\newcommand{\documentversion}{ver. 1.1}
+
+\title{Fourier's Phone - szczegółowa specyfikacja}
+\author{Frederic Grabowski \and Bartłomiej Karasek \and Wojciech Przybyszewski 
+        \and Andrzej Swatowski}
+\date{\documentdate \\ \documentversion}
+
+%------------------
+% DOCUMENT %
+\begin{document}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{Szczegółowe założenia działania projektu}
+    \begin{enumerate}
+        \item Aplikacja umożliwia przesyłanie plików między telefonami przy 
+              użyciu dźwięku.
+        \item Telefon może działać w trybie urządzenie nadającego lub urządzenia
+              odbierającego.
+        \item W aplikacji użytkownik wybiera za pomocą menadżera plików plik do
+              przesłania.
+        \item Menadżer plików ma dostęp tylko do plików nieukrywanych w~żaden 
+              sposób przez system telefonu.
+        \item Po wybraniu pliku telefon rozpoczyna nadawanie pliku i~staje się 
+              urządzeniem nadającym.
+            \begin{enumerate}
+                \item Aplikacja nie wykrywa, czy w zasięgu nadawania urządzenia
+                      nadającego znajduje się jakieś urządzenie odbierające.
+                \item Aplikacja nie podaje również żadnych informacji na temat
+                      sukcesu nadawania.
+                \item W przypadku przerwania nadawania (przez użytkownika za 
+                      pomocą przycisku lub z~powodów niezależnych od użytkownika) 
+                      nie jest określone, czy urządzenie odbierające odbierze 
+                      choć część pliku.
+                \item Podobnie w przypadku zakłóceń zewnętrznych (szumów, krzyków,
+                      itp.) nie ma gwarancji, że nawet w~przypadku powodzenia 
+                      nadawania urządzenie odbierające poprawnie odbierze plik.
+            \end{enumerate}
+        \item Po zakończeniu nadawania urządzenie nadające poinformuje 
+              o~zakończeniu nadawania.
+        \item W~aplikacji można wybrać opcję odbierania pliku przez telefon, 
+              który staje się wtedy urządzeniem odbierającym.
+        \item Po wybraniu opcji odbierania urządzenie odbierające rozpoczyna 
+              nasłuchiwanie, czy odbywa się jakieś nadawanie.
+        \item W~przypadku nie znalezienia urządzenia nadającego w~ciągu 
+              ustawionego czasu (domyślnie 10 sekund) użytkownik zostaje o~tym 
+              fakcie poinformowany, a~odbieranie zostaje przerwane.
+        \item W~przypadku znalezienia choć jednego urządzenia odbierającego, 
+              rozpoczyna się odbieranie.
+            \begin{enumerate}
+                \item W~sytuacjach opisanych w~punktach E.3. i~E.4., a~także 
+                      w~sytuacji, gdy jest więcej niż jedno urządzenie nadające 
+                      w~zasięgu, nie ma gwarancji, czy urządzenie odbierze plik 
+                      poprawnie.
+                \item Urządzenie odbierające może w~przypadku takich problemów 
+                      poinformować o~błędzie odbierania i~zakończyć działanie 
+                      w~trybie odbierania.
+                \item Urządzenie odbierające może również odebrać plik niepoprawny.
+            \end{enumerate}
+        \item Po zakończeniu odbierania urządzenie prosi o~podanie nazwy pliku, 
+              pod którą zapisze odebrany plik w~katalogu utworzonym przez aplikację. 
+              W~przypadku niepoprawnej (niezgodnej z~przyjętym standardem nazywania 
+              plików w~systemach Android) nazwy użytkownik zostanie poproszony 
+              o~inną nazwę.
+    \end{enumerate}
+
+\section{Założenia wydajnościowe}
+    \begin{enumerate}
+        \item Urządzenie przesyła pliki z~szybkością ok. 64 bitów na sekundę.
+        \item Warunki otoczenia nie wpływają na szybkość przesyłania, a~jedynie 
+              na skuteczność przesyłania.
+    \end{enumerate}
+        
+\section{Założenia pojemnościowe}
+    \begin{enumerate}
+        \item Urządzenie nadające może przesyłać na raz jeden plik.
+        \item Urządzenie odbierające może odbierać na raz jeden plik.
+        \item W przypadku równoczesnego nadawania przez dwa urządzenia nadające 
+              może nastąpić błąd odbierania, który skutkuje nieprawidłową reakcją
+              urządzenia odbierającego.
+        \item Równoczesne odbieranie przez dowolną ilość urządzeń odbierających 
+              nie skutkuje błędem.
+    \end{enumerate}
+        
+\section{Wymagania sprzętowe}
+    \begin{enumerate}
+        \item Aplikacja przeznaczona jest na telefony z systemem Android w~wersji
+              5.0 lub wyższej.
+        \item Telefon musi ponadto posiadać sprawnie działający głośnik i~mikrofon
+              pozwalające odpowiednio nadawać i~odbierać dźwięki o~częstotliwości
+              od 220 Hz do 8 kHz
+    \end{enumerate}
+        
+\section{Wymagania środowiskowe}
+    \begin{enumerate}
+        \item Przesyłanie danych musi odbywać się w~cichym, niezaszumionym miejscu, 
+              w~którym znajduje się ośrodek umożliwiający rozchodzenie się fal 
+              dźwiękowych (np. nie w~próżni).
+        \item Odległość w~jakiej mogą znaleźć się telefony, aby móc poprawnie 
+              przesłać plik, zależy od sprawności działania ich głośnika i~mikrofonu
+              oraz miejsca w~którym odbywa się przesyłanie danych (rozumianego 
+              jako położenie w~przestrzeni i~własności fizyczne ośrodka, w~którym
+              następuje wymiana danych), przy czym jest ona charakterystyczna 
+              dla każdej pary telefonów, a~nie pojedynczego telefonu.
+    \end{enumerate}
+
+\end{document}

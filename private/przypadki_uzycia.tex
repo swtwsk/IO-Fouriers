@@ -1,0 +1,92 @@
+\documentclass{article}
+
+% SETTINGS %
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{titlesec}
+\usepackage[bookmarks=true,hidelinks]{hyperref}
+
+\newcommand{\sectionbreak}{\clearpage}
+\newcommand{\documentdate}{23 marca 2018}
+\newcommand{\documentversion}{ver. 1.1}
+
+\title{Fourier's Phone - przypadki użycia}
+\author{Frederic Grabowski \and Bartłomiej Karasek \and Wojciech Przybyszewski 
+        \and Andrzej Swatowski}
+\date{\documentdate \\ \documentversion}
+
+%------------------
+% DOCUMENT %
+\begin{document}
+
+\maketitle
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{Lista przypadków użycia}
+    \begin{enumerate}
+        \item Przesyłanie niewielkich plików (P2P)
+        \item Demonstrowanie komunikacji w sieciach
+        \item Przesyłanie wiadomości tekstowych (party trick/gag)
+        \item Wykonywanie performance'ów artystycznych (modern art)
+        \item Antropologiczny komentarz społeczeństwa XXI wieku
+        \item Łodzie podwodne i wieloryby
+    \end{enumerate}
+
+\newpage
+\section{Przesyłanie niewielkich plików (P2P)}
+\subsection{Krótki opis}
+Ten przypadek opisuje w jaki sposób użytkownicy aplikacji mogą bezpośrednio wymieniać między sobą niewielkie pliki.
+\subsection{Aktorzy}
+\subsubsection{Nadawca}
+\subsubsection{Odbiorcy (co najmniej jeden)}
+\subsection{Wymagania}
+Aktorzy znajdują się we względnie cichym miejscu z ośrodkiem umożliwiającym rozchodzenie się fal dźwiękowych (na przykład \bf{szafa}).
+
+\subsection{Scenariusz użycia}
+\begin{enumerate}
+	\normalfont \item \bf Nadawca \normalfont wybiera plik do wysłania i informuje \bf odbiorców \normalfont o intencji wysłania pliku.
+	\item \bf Odbiory \normalfont włączają aplikację w trybie odbierania przygotowując się mentalnie i sprzętowo do transmisji.
+	\item \bf Nadawca \normalfont po upewnieniu się o gotowości \bf odbiorców \normalfont włącza aplikację w trybie nadawania i następnie rozpoczyna transmisję.
+	\item \bf Nadawca \normalfont i \bf odbiorcy \normalfont zachowują ciszę i spokój do czasu zakończenia transmisji o którym zostaną poinformowani przez aplikację.
+	\item \bf Odbiorcy \normalfont zapisują odebrany plik u siebie na urządzeniach.
+\end{enumerate}
+
+\subsection{Potencjalne problemy}
+\subsubsection{Niekompletny odbiór}
+\normalfont
+Jeżeli jeden z odbiorców rozpocznie odbieranie transmisji za późno lub nadawca rozpocznie nadawanie za wcześnie odebrany plik może być uszkodzony. Dla bezpieczeństwa zalecane jest powtórzenie transmisji oraz niezapisywanie odebranego pliku.
+\subsubsection{Zakłócenie odbioru}
+\normalfont
+Jeżeli nadawca i odbiorca dojdą do wniosku że z powodu zanieczyszczenia hałasem transmisja mogła się nie udać zaleca się postępowanie jak w punkcie \bf Niekompletny odbiór \normalfont
+
+
+\newpage
+\section{Wykonywanie performance'ów artystycznych (modern art)}
+\subsection{Krótki opis}
+Ten przypadek opisuje w jaki sposób artyści za pomocą aplikacji mogą tworzyć sztukę współczesną lub wykonywać performance'y.
+\subsection{Aktorzy}
+\subsubsection{Sztukmistrz}
+\subsubsection{Widzowie (opcjonalni)}
+\subsection{Wymagania}
+Aktorzy znajdują się we względnie cichym miejscu z ośrodkiem umożliwiającym rozchodzenie się fal dźwiękowych (na przykład \bf{szafa}).
+
+\subsection{Scenariusz użycia}
+\normalfont
+Oczywiście jest to jedynie przykład; zachęcamy do poszukiwania własnych środków \bf wyrazu artystycznego\normalfont{.}
+\begin{enumerate}
+	\normalfont \item \bf Sztukmistrz \normalfont wchodzi do \bf szafy \normalfont
+	\item \bf Sztukmistrz \normalfont uruchamia pierwsze urządzenie w trybie nadawania
+	\item \bf Sztukmistrz \normalfont uruchamia drugie urządzenie w trybie nadawania wybierając \it Pana Tadeusza \normalfont
+	\item Po przepuszczeniu wynikowej wiadomości przez autokoretkę, improwizuje przedstawienie oparte o powstały tekst
+	\item \bf Widzowie \normalfont są \bf zachwyceni \normalfont
+\end{enumerate}
+
+\subsection{Potencjalne problemy}
+\normalfont
+Nie podejmujemy się komentarza tak subiektywnego doświadczenia. Każdą słabość można przekuć w siłę.
+
+
+\end{document}
