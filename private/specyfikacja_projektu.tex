@@ -5,10 +5,14 @@
 \usepackage[utf8]{inputenc}
 \usepackage{titlesec}
 \usepackage[bookmarks=true,hidelinks]{hyperref}
+\usepackage{xcolor}
+\usepackage{color,soul}
 
 \newcommand{\sectionbreak}{\clearpage}
-\newcommand{\documentdate}{23 marca 2018}
-\newcommand{\documentversion}{ver. 1.1}
+\newcommand{\documentdate}{30 marca 2018}
+\newcommand{\documentversion}{ver. 1.2}
+\newcommand{\seriaA}[1]{\color{pink}{#1}\color{black}}
+\newcommand{\seriaB}[1]{\color{blue}{#1}\color{black}}
 
 \title{Fourier's Phone - szczegółowa specyfikacja}
 \author{Frederic Grabowski \and Bartłomiej Karasek \and Wojciech Przybyszewski 
@@ -27,68 +31,129 @@
 
 \section{Szczegółowe założenia działania projektu}
     \begin{enumerate}
-        \item Aplikacja umożliwia przesyłanie plików między telefonami przy 
-              użyciu dźwięku.
-        \item Telefon może działać w trybie urządzenie nadającego lub urządzenia
-              odbierającego.
-        \item W aplikacji użytkownik wybiera za pomocą menadżera plików plik do
-              przesłania.
-        \item Menadżer plików ma dostęp tylko do plików nieukrywanych w~żaden 
-              sposób przez system telefonu.
-        \item Po wybraniu pliku telefon rozpoczyna nadawanie pliku i~staje się 
-              urządzeniem nadającym.
+        \item \seriaA{Aplikacja umożliwia przesyłanie danych między telefonami przy użyciu:}
             \begin{enumerate}
-                \item Aplikacja nie wykrywa, czy w zasięgu nadawania urządzenia
-                      nadającego znajduje się jakieś urządzenie odbierające.
-                \item Aplikacja nie podaje również żadnych informacji na temat
-                      sukcesu nadawania.
-                \item W przypadku przerwania nadawania (przez użytkownika za 
+                \item \seriaA{dźwięku.}
+                \item światła.
+            \end{enumerate}
+        \item Aplikacja umożliwia przesyłanie określonych typów danych:
+            \begin{enumerate}
+                \item \seriaB{przesyłanie plików.}
+                \item \seriaA{przesyłanie tekstu.}
+            \end{enumerate}
+        \item Aplikacja może działać także w module komunikatora tekstowego.
+        \item \seriaA{Telefon może działać w trybie urządzenie nadającego lub urządzenia
+              odbierającego.}
+        \item \seriaB{Aplikacji użytkownik wybiera za pomocą menadżera plików plik do
+              przesłania:
+            \begin{enumerate}
+            \item {Menadżer plików ma dostęp tylko do plików nieukrywanych w~żaden 
+                  sposób przez system telefonu.}
+            \end{enumerate}}
+        \item \seriaA{Po wybraniu pliku telefon rozpoczyna nadawanie pliku i~staje się 
+              urządzeniem nadającym.}
+            \begin{enumerate}
+                \item \seriaA{Aplikacja nie wykrywa, czy w zasięgu nadawania urządzenia
+                      nadającego znajduje się jakieś urządzenie odbierające.}
+                \item \seriaA{Aplikacja nie podaje również żadnych informacji na temat
+                      sukcesu nadawania.}
+                \item \seriaA{W przypadku przerwania nadawania (przez użytkownika za 
                       pomocą przycisku lub z~powodów niezależnych od użytkownika) 
                       nie jest określone, czy urządzenie odbierające odbierze 
-                      choć część pliku.
-                \item Podobnie w przypadku zakłóceń zewnętrznych (szumów, krzyków,
+                      choć część pliku.}
+                \item \seriaA{Podobnie w przypadku zakłóceń zewnętrznych (szumów, krzyków,
                       itp.) nie ma gwarancji, że nawet w~przypadku powodzenia 
-                      nadawania urządzenie odbierające poprawnie odbierze plik.
+                      nadawania urządzenie odbierające poprawnie odbierze plik.}
             \end{enumerate}
-        \item Po zakończeniu nadawania urządzenie nadające poinformuje 
-              o~zakończeniu nadawania.
-        \item W~aplikacji można wybrać opcję odbierania pliku przez telefon, 
-              który staje się wtedy urządzeniem odbierającym.
-        \item Po wybraniu opcji odbierania urządzenie odbierające rozpoczyna 
-              nasłuchiwanie, czy odbywa się jakieś nadawanie.
-        \item W~przypadku nie znalezienia urządzenia nadającego w~ciągu 
+        \item \seriaA{Po zakończeniu nadawania urządzenie nadające poinformuje 
+              o~zakończeniu nadawania.}
+        \item \seriaB{W~aplikacji można wybrać opcję odbierania pliku przez telefon, 
+              który staje się wtedy urządzeniem odbierającym.}
+        \item \seriaA{Po wybraniu opcji odbierania urządzenie odbierające rozpoczyna 
+              nasłuchiwanie, czy odbywa się jakieś nadawanie.}
+        \item \seriaA{W~przypadku nie znalezienia urządzenia nadającego w~ciągu 
               ustawionego czasu (domyślnie 10 sekund) użytkownik zostaje o~tym 
-              fakcie poinformowany, a~odbieranie zostaje przerwane.
-        \item W~przypadku znalezienia choć jednego urządzenia odbierającego, 
-              rozpoczyna się odbieranie.
+              fakcie poinformowany, a~odbieranie zostaje przerwane.}
+        \item \seriaA{W~przypadku znalezienia choć jednego urządzenia odbierającego, 
+              rozpoczyna się odbieranie.}
             \begin{enumerate}
-                \item W~sytuacjach opisanych w~punktach E.3. i~E.4., a~także 
+                \item \seriaA{W~sytuacjach opisanych w~punktach 6.c. i~6.d., a~także 
                       w~sytuacji, gdy jest więcej niż jedno urządzenie nadające 
                       w~zasięgu, nie ma gwarancji, czy urządzenie odbierze plik 
-                      poprawnie.
-                \item Urządzenie odbierające może w~przypadku takich problemów 
+                      poprawnie.}
+                \item \seriaA{Urządzenie odbierające może w~przypadku takich problemów 
                       poinformować o~błędzie odbierania i~zakończyć działanie 
-                      w~trybie odbierania.
-                \item Urządzenie odbierające może również odebrać plik niepoprawny.
+                      w~trybie odbierania.}
+                \item \seriaA{Urządzenie odbierające może również odebrać plik niepoprawny.}
             \end{enumerate}
-        \item Po zakończeniu odbierania urządzenie prosi o~podanie nazwy pliku, 
-              pod którą zapisze odebrany plik w~katalogu utworzonym przez aplikację. 
+        \item \seriaB{Po zakończeniu odbierania urządzenie prosi o~podanie nazwy pliku, 
+              pod którą zapisze odebrany plik w~katalogu utworzonym przez aplikację. \\
               W~przypadku niepoprawnej (niezgodnej z~przyjętym standardem nazywania 
               plików w~systemach Android) nazwy użytkownik zostanie poproszony 
-              o~inną nazwę.
+              o~inną nazwę.}
+        \item Moduł komunikatora korzysta ze specjalnie zdefiniowanego protokołu, 
+              który pozwala nawiązać połączenie między urządzeniami i~umożliwiające
+              wzajemną komunikację. Protokół ten umożliwia komunikowanie się 
+              między wieloma urządzeniami, bez konieczności ręcznej zmiany trybu 
+              przez użytkownika aplikacji.
     \end{enumerate}
+    
+%\section{Szczegółowa specyfikacja protokołu}
+%    \begin{enumerate}
+%        \item Protokół jest zbiorem ścisłych reguł i~kroków postępowania, które są
+%              automatycznie wykonywane przez urządzenia komunikacyjne w~celu nawiązania
+%              łączności i~wymiany danych.
+%        \item Aplikacja musi wykonać wszystkie opisane niżej kroki, by nawiązać
+%              łączność z~inną aplikacją.
+%        \item Protokół wymaga od użytkownika wybrania początkowego trybu - odbierania lub
+%              nadawania. W~architekturze \textit{klient-serwer} jest to z~góry ustalone,
+%              w~przypadku korzystania z~architektury \textit{peer-to-peer} ustalają
+%              to użytkownicy aplikacji przed nawiązaniem połączenia.
+%        \item Za pomocą protokołu komunikować mogą się jedynie dwa urządzenia.
+%        \item Protokół składa się z czterech wyszczególnionych części:
+%            \begin{enumerate}
+%                \item procedury powitalnej (tak zwany \textit{handshake}):
+%                    \begin{enumerate}
+%                        \item Urządzenie w~trybie nadawania wysyła do urządzenia 
+%                              odbierającego określoną sekwencję sygnałów dźwiękowych, 
+%                              oznaczającą \textbf{HAIL} oraz \textbf{dwa sygnały 
+%                              wyznaczające szerokość pasma}, jakie zamierza wykorzystywać do 
+%                              komunikacji - najniższy możliwy dźwięk i~najwyższy 
+%                              możliwy dźwięk.
+%                        \item Urządzenie odbierające odbiera wyżej wymienioną
+%                              sekwencję i~musi w~ciągu 30 sekund odpowiedzieć
+%                              analogiczną sekwencją, oznaczającą \textbf{HAIL ACC}.
+%                        \item Gdy urządzenie nadające odbierze odpowiedź urządzenia
+%                              odbierającego, urządzenia zakładają, że procedura
+%                              powitalna zakończyła się ustaleniem połączenia.
+%                    \end{enumerate}
+%                \item właściwego przekazu danych:
+%                    \begin{enumerate}
+%                        \item Urządzenie nadające wysyła dane w pakietach po 1024 bajty.
+%                        \item Urządzenie odbierające odbiera wyżej wymienioną
+%                              sekwencję i~musi w~ciągu 30 sekund odpowiedzieć
+%                              analogiczną sekwencją, oznaczającą \textbf{HAIL ACC}.
+%                        \item Gdy urządzenie nadające odbierze odpowiedź urządzenia
+%                              odbierającego, urządzenia zakładają, że procedura
+%                              powitalna zakończyła się ustaleniem połączenia.
+%                    \end{enumerate}
+%                \item procedury sprawdzania sum kontrolnych:
+%                \item procedury pożegnania, która może zakończyć transmisję lub
+%                      kontynuować ją, poprzez powrót do procedury powitalnej:
+%            \end{enumerate}
+%    \end{enumerate}
 
 \section{Założenia wydajnościowe}
     \begin{enumerate}
-        \item Urządzenie przesyła pliki z~szybkością ok. 64 bitów na sekundę.
+        \item Urządzenie przesyła dane z~szybkością ok. 64 bitów na sekundę.
         \item Warunki otoczenia nie wpływają na szybkość przesyłania, a~jedynie 
               na skuteczność przesyłania.
     \end{enumerate}
         
 \section{Założenia pojemnościowe}
     \begin{enumerate}
-        \item Urządzenie nadające może przesyłać na raz jeden plik.
-        \item Urządzenie odbierające może odbierać na raz jeden plik.
+        \item Urządzenie nadające może przesyłać na raz jeden zestaw danych.
+        \item Urządzenie odbierające może odbierać na raz jeden zestaw danych.
         \item W przypadku równoczesnego nadawania przez dwa urządzenia nadające 
               może nastąpić błąd odbierania, który skutkuje nieprawidłową reakcją
               urządzenia odbierającego.
