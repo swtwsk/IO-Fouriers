@@ -6,6 +6,7 @@
 *.toc
 *.synctex.gz
 .gradle
+*.iml
 /local.properties
 /.idea/workspace.xml
 /.idea/libraries
