@@ -27,16 +27,15 @@
 
 \section{Lista przypadków użycia}
     \begin{enumerate}
-        \item Przesyłanie niewielkich plików (P2P)
+        \item Przesyłanie plików (P2P)
         \item Demonstrowanie komunikacji w sieciach
         \item Przesyłanie wiadomości tekstowych (party trick/gag)
         \item Wykonywanie performance'ów artystycznych (modern art)
-        \item Antropologiczny komentarz społeczeństwa XXI wieku
-        \item Łodzie podwodne i wieloryby
+        \item Komunikacja podwodna (z łodziami podwodnymi, wielorybami itp.)
     \end{enumerate}
 
 \newpage
-\section{Przesyłanie niewielkich plików (P2P)}
+\section{Przesyłanie plików (P2P)}
 \subsection{Krótki opis}
 Ten przypadek opisuje w jaki sposób użytkownicy aplikacji mogą bezpośrednio wymieniać między sobą niewielkie pliki.
 \subsection{Aktorzy}
@@ -49,18 +48,19 @@ Aktorzy znajdują się we względnie cichym miejscu z ośrodkiem umożliwiający
 \begin{enumerate}
 	\normalfont \item \bf Nadawca \normalfont wybiera plik do wysłania i informuje \bf odbiorców \normalfont o intencji wysłania pliku.
 	\item \bf Odbiory \normalfont włączają aplikację w trybie odbierania przygotowując się mentalnie i sprzętowo do transmisji.
-	\item \bf Nadawca \normalfont po upewnieniu się o gotowości \bf odbiorców \normalfont włącza aplikację w trybie nadawania i następnie rozpoczyna transmisję.
-	\item \bf Nadawca \normalfont i \bf odbiorcy \normalfont zachowują ciszę i spokój do czasu zakończenia transmisji o którym zostaną poinformowani przez aplikację.
-	\item \bf Odbiorcy \normalfont zapisują odebrany plik u siebie na urządzeniach.
+	\item \bf Nadawca \normalfont po upewnieniu się o gotowości \bf odbiorców \normalfont włącza aplikację w trybie nadawania i klika przycisk rozpoczęcia transmisji.
+	\item Aplikacja rozpoczyna nadawanie pliku przy użyciu dźwięków słyszalnych.
+	\item \bf Nadawca \normalfont i \bf odbiorcy \normalfont zachowują ciszę i spokój do czasu zakończenia transmisji, o czym zostaną poinformowani przez aplikację.
+	\item \bf Odbiorcy \normalfont zostają przez aplikację poinformowani o zakończeniu odbierania i korzystając z niej zapisują w wybranej lokalizacji plik.
 \end{enumerate}
 
 \subsection{Potencjalne problemy}
 \subsubsection{Niekompletny odbiór}
 \normalfont
-Jeżeli jeden z odbiorców rozpocznie odbieranie transmisji za późno lub nadawca rozpocznie nadawanie za wcześnie odebrany plik może być uszkodzony. Dla bezpieczeństwa zalecane jest powtórzenie transmisji oraz niezapisywanie odebranego pliku.
+Jeżeli jeden z odbiorców rozpocznie odbieranie transmisji za późno lub nadawca rozpocznie nadawanie za wcześnie mechanizmy zabezpieczające (oddzielne dźwięki startu i końca nadawania, sumy kontrolne) powinny doprowadzić do odebrany nieodebrania żadnego pliku. W takim przypadku zaleca się retransmisję pliku.
 \subsubsection{Zakłócenie odbioru}
 \normalfont
-Jeżeli nadawca i odbiorca dojdą do wniosku że z powodu zanieczyszczenia hałasem transmisja mogła się nie udać zaleca się postępowanie jak w punkcie \bf Niekompletny odbiór \normalfont
+Jeżeli nadawca i odbiorca dojdą do wniosku że z powodu zanieczyszczenia hałasem mimo, iż plik doszedł, to może być uszkodzony, zaleca się niezapisywanie pliku i retransmisję.
 
 
 \newpage
@@ -77,11 +77,12 @@ Aktorzy znajdują się we względnie cichym miejscu z ośrodkiem umożliwiający
 \normalfont
 Oczywiście jest to jedynie przykład; zachęcamy do poszukiwania własnych środków \bf wyrazu artystycznego\normalfont{.}
 \begin{enumerate}
-	\normalfont \item \bf Sztukmistrz \normalfont wchodzi do \bf szafy \normalfont
-	\item \bf Sztukmistrz \normalfont uruchamia pierwsze urządzenie w trybie nadawania
-	\item \bf Sztukmistrz \normalfont uruchamia drugie urządzenie w trybie nadawania wybierając \it Pana Tadeusza \normalfont
-	\item Po przepuszczeniu wynikowej wiadomości przez autokoretkę, improwizuje przedstawienie oparte o powstały tekst
-	\item \bf Widzowie \normalfont są \bf zachwyceni \normalfont
+	\normalfont \item \bf Sztukmistrz \normalfont wchodzi do \bf szafy \normalfont.
+	\item \bf Sztukmistrz \normalfont uruchamia pierwsze urządzenie w trybie odbierania.
+	\item \bf Sztukmistrz \normalfont uruchamia drugie urządzenie w trybie nadawania wybierając \it Pana Tadeusza \normalfont.
+	\item \bf Sztukmistrz \normalfont zaczyna śpiewać \it Odę do Radości \normalfont zakłócając tym samym transmisję.
+	\item Po przepuszczeniu wynikowej wiadomości przez autokorektę, improwizuje przedstawienie oparte o powstały tekst.
+	\item \bf Widzowie \normalfont są \bf zachwyceni \normalfont.
 \end{enumerate}
 
 \subsection{Potencjalne problemy}
