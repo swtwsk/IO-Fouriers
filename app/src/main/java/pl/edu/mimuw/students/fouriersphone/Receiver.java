@@ -32,9 +32,9 @@ public class Receiver implements Runnable {
         int numberOfSamples = 3;
         Double frequences[] = new Double[numberOfSamples];
 
+        CTFFT fft = new CTFFT();
         for(int i = 0; i < numberOfSamples; i++) {
             audioInput.read(audioBuffer, 0, bufferSize);
-            CTFFT fft = new CTFFT();
             frequences[i] = fft.dominant(audioBuffer) / (5.5);
             Log.v("myLogs", "freq is " + Double.toString(frequences[i]));
         }
@@ -48,11 +48,10 @@ public class Receiver implements Runnable {
     }
     @Override
     public void run() {
-        Translator translator = new Translator();
         int secondsToListen = 30;
         for(int i = 0; i < secondsToListen; i++) {
             String oldCharacters = editText.getText().toString();
-            String translatedCharacter = translator.ftos(getpitch());
+            String translatedCharacter = Translator.ftos(getpitch());
             if(translatedCharacter != "OOV") {
                 editText.setText(oldCharacters + translatedCharacter);
             }
