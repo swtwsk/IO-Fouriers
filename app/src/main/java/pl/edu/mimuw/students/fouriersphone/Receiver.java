@@ -1,18 +1,16 @@
 package pl.edu.mimuw.students.fouriersphone;
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.os.SystemClock;
 import android.util.Log;
 import android.widget.EditText;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 
 public class Receiver implements Runnable {
-    EditText editText;
+    private EditText editText;
 
     public Receiver(EditText editText) {
         this.editText = editText;
@@ -50,10 +48,9 @@ public class Receiver implements Runnable {
     public void run() {
         int secondsToListen = 30;
         for(int i = 0; i < secondsToListen; i++) {
-            String oldCharacters = editText.getText().toString();
             String translatedCharacter = Translator.ftos(getpitch());
-            if(translatedCharacter != "OOV") {
-                editText.setText(oldCharacters + translatedCharacter);
+            if(!Objects.equals(translatedCharacter, "OOV")) {
+                editText.append(translatedCharacter);
             }
             editText.postInvalidate();
         }
