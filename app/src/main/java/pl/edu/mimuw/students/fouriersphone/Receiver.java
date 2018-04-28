@@ -9,6 +9,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Switch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,12 +22,14 @@ import static java.util.Collections.reverseOrder;
 
 
 public class Receiver {
+    final Switch modeSwitch;
     final EditText editText;
     final Button button;
 
     public Receiver(Activity activity) {
         this.editText = activity.findViewById(R.id.editText);
         button = activity.findViewById(R.id.button);
+        modeSwitch = activity.findViewById(R.id.modeSwitch);
     }
 
     private double getpitch(){
@@ -142,8 +145,10 @@ public class Receiver {
             button.post(new Runnable() {
                 @Override
                 public void run() {
-                    button.setText("Receive");
-                    button.postInvalidate();
+                    if (!modeSwitch.isChecked()) {
+                        button.setText("Receive");
+                        button.postInvalidate();
+                    }
                 }
             });
             Log.v("receiverLogs", "Done listening!");
