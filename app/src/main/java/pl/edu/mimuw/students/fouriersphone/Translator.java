@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Translator {
     /**
-     * String to frequency function
+     * Class for translating strings to frequencies and frequencies to strings.
      */
     private final static double base = 220;
     private final static String []alphabet = {
