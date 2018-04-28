@@ -38,7 +38,7 @@ public class Sender {
             mBuffer[i] = (short) (mSound[i]*Short.MAX_VALUE);
         }
 
-        mAudioTrack.setStereoVolume(AudioTrack.getMaxVolume(), AudioTrack.getMaxVolume());
+        mAudioTrack.setVolume(AudioTrack.getMaxVolume());
         mAudioTrack.play();
 
         mAudioTrack.write(mBuffer, 0, mSound.length);

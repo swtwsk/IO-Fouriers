@@ -44,6 +44,7 @@ public class Receiver implements Runnable {
 
         return frequences[numberOfSamples / 2];
     }
+
     @Override
     public void run() {
         int secondsToListen = 30;
