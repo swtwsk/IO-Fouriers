@@ -19,13 +19,17 @@ public class MainActivity extends AppCompatActivity {
 
     Switch modeSwitch;
     Button button;
-
+    Receiver r;
+    Sender s;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         modeSwitch = findViewById(R.id.modeSwitch);
+
+        r = new Receiver(this);
+        s = new Sender(this);
 
         button = findViewById(R.id.button);
         if (modeSwitch.isChecked()) {
@@ -39,22 +43,34 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (modeSwitch.isChecked()) {
-                    button.setText(getString(R.string.send_button));
+                    if(s.isAlive()) {
+                        button.setText("StopS");
+                    }
+                    else {
+                        button.setText("Send");
+                    }
                 }
                 else {
-                    button.setText(getString(R.string.receive_button));
+                    if(r.isAlive()) {
+                        button.setText("StopR");
+                    }
+                    else {
+                        button.setText("Receive");
+                    }
                 }
             }
         });
     }
 
 
+
     public void clickDoButton(View view) {
         EditText editText = findViewById(R.id.editText);
         if (modeSwitch.isChecked()) {
-            String s = editText.getText().toString();
-            Sender.run(s);
-        } else {
+            String message = editText.getText().toString();
+            s.start(message);
+        }
+        else {
 
             String premissions[] = {Manifest.permission.RECORD_AUDIO};
             requestPermissions(premissions, 1);
@@ -63,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
             int res = MainActivity.this.checkCallingOrSelfPermission(permission);
             if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.RECORD_AUDIO)
                     == PackageManager.PERMISSION_GRANTED) {
-                editText.setText("");
-                (new Thread (new Receiver(editText))).start();
-            } else {
+                r.start();
+            }
+            else {
                 editText.setText("error - premission.RECORD_AUDIO not granted");
             }
 

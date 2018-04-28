@@ -101,6 +101,6 @@ public class CTFFT {
             dom = max / (out[maxi] + out[maxi + 1]);
         }
 
-        return 44100.0 * dom / n;
+        return 44100.0 * dom / n / 5.5;
     }
 }
