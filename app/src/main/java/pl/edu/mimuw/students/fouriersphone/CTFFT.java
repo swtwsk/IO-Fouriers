@@ -2,7 +2,7 @@ package pl.edu.mimuw.students.fouriersphone;
 
 public class CTFFT {
     // n = 2^m = size of input tables
-    private int m = 13, n = 1 << m;
+    private int m = 10, n = 1 << m;
 
     private double[] inp;
     private double[] out;
