@@ -1,31 +1,33 @@
 package pl.edu.mimuw.students.fouriersphone;
 
+import java.util.Objects;
+
 public class Translator {
     /**
      * String to frequency function
      */
-    public static int stof(String sign) {
-        int frequency = 200;
+    private final static double base = 220;
+    private final static String []alphabet = {
+            "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+            "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
+            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+            " ", ".", "START", "STOP"
+    };
 
-        if (sign.length() == 1) {
-            char letter = sign.charAt(0);
-            if (letter > 96 && letter < 123) { // Lowercase letters
-                frequency = (int) (440 * Math.pow(2, ((double) (letter - 97)) / 12));
-            } else if (letter > 64 && letter < 91) { // Uppercase letters
-                frequency = (int) (440 * Math.pow(2, ((double) (letter - 39)) / 12));
-            } else if (letter == ' ') {
-                frequency = (int) (440 * Math.pow(2, ((double) 52) / 12));
-            } else if (letter == '.') {
-                frequency = (int) (440 * Math.pow(2, ((double) 53) / 12));
-            }
-        } else {
-            if (sign.equals("START")) {
-                frequency = 19000;
-            } else if (sign.equals("STOP")) {
-                frequency = 18000;
-            }
-        }
+    private static double sound(int n) {
+        return base * Math.pow(2, ((double) n) / 12);
+    }
 
-        return frequency;
+    public static double stof(String sign) {
+        int i = 0;
+        while (i < alphabet.length && !Objects.equals(alphabet[i], sign)) ++i;
+        return sound(i);
+    }
+
+    public static String ftos(double freq) {
+        int n = (int) Math.round(12 * Math.log(freq / base) / Math.log(2));
+        return (n >= 0 && n < alphabet.length) ? alphabet[n] : "OOV";
+
     }
 }
