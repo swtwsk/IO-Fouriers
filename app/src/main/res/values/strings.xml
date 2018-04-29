@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Fourier\'s Phone</string>
     <string name="send_button">Send</string>
+    <string name="send_button_stop">Stop send</string>
     <string name="receive_button">Receive</string>
+    <string name="receive_button_stop">Stop receive</string>
     <string name="mode_switch">Mode</string>
 </resources>

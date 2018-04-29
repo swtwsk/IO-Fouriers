@@ -1,13 +1,11 @@
 package pl.edu.mimuw.students.fouriersphone;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -44,18 +42,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (modeSwitch.isChecked()) {
                     if(s.isAlive()) {
-                        button.setText("StopS");
+                        button.setText(getString(R.string.send_button_stop));
                     }
                     else {
-                        button.setText("Send");
+                        button.setText(getString(R.string.send_button));
                     }
                 }
                 else {
                     if(r.isAlive()) {
-                        button.setText("StopR");
+                        button.setText(getString(R.string.receive_button_stop));
                     }
                     else {
-                        button.setText("Receive");
+                        button.setText(getString(R.string.receive_button));
                     }
                 }
             }

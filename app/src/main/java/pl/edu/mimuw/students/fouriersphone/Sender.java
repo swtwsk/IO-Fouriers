@@ -10,12 +10,14 @@ import android.widget.EditText;
 import android.widget.Switch;
 
 public class Sender {
+    final Activity activity;
     final Switch modeSwitch;
     final EditText editText;
     final Button button;
     Thread t;
     public Sender(Activity activity) {
-        this.editText = activity.findViewById(R.id.editText);
+        this.activity = activity;
+        editText = activity.findViewById(R.id.editText);
         button = activity.findViewById(R.id.button);
         modeSwitch = activity.findViewById(R.id.modeSwitch);
     }
@@ -30,11 +32,11 @@ public class Sender {
             } catch(InterruptedException  e) {
                 Log.v("exception", "InterruptedException");
             }
-            button.setText("Receive");
+            button.setText(activity.getString(R.string.receive_button));
         } else {
             editText.setText("");
-            button.setText("StopS");
-            t = (new Thread (new Sender.runnable(message)));
+            button.setText(R.string.send_button_stop);
+            t = (new Thread (new Sender.runnable(message, activity)));
             t.start();
         }
     }
@@ -77,9 +79,11 @@ public class Sender {
 
     private class runnable implements Runnable {
         final String message;
+        final Activity activity;
 
-        runnable(String message) {
+        runnable(String message, Activity activity) {
             this.message = message;
+            this.activity = activity;
         }
         @Override
         public void run() {
@@ -94,7 +98,7 @@ public class Sender {
                 @Override
                 public void run() {
                     if (modeSwitch.isChecked()) {
-                        button.setText("Send");
+                        button.setText(activity.getString(R.string.send_button));
                         button.postInvalidate();
                     }
                 }

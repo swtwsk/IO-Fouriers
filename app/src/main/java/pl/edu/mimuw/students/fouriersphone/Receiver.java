@@ -22,12 +22,14 @@ import static java.util.Collections.reverseOrder;
 
 
 public class Receiver {
+    final Activity activity;
     final Switch modeSwitch;
     final EditText editText;
     final Button button;
 
     public Receiver(Activity activity) {
-        this.editText = activity.findViewById(R.id.editText);
+        this.activity = activity;
+        editText = activity.findViewById(R.id.editText);
         button = activity.findViewById(R.id.button);
         modeSwitch = activity.findViewById(R.id.modeSwitch);
     }
@@ -106,11 +108,11 @@ public class Receiver {
             } catch(InterruptedException  e) {
                 Log.v("exception", "InterruptedException");
             }
-            button.setText("Receive");
+            button.setText(activity.getString(R.string.receive_button));
         } else {
             editText.setText("");
-            button.setText("StopR");
-            t = (new Thread (new runnable()));
+            button.setText(activity.getString(R.string.receive_button_stop));
+            t = (new Thread (new runnable(activity)));
             t.start();
         }
     }
@@ -120,6 +122,12 @@ public class Receiver {
     }
 
     private class runnable implements Runnable {
+        final Activity activity;
+
+        runnable(Activity activity) {
+            this.activity = activity;
+        }
+
         @Override
         public void run() {
             Log.v("receiverLogs", "Started Runnable");
@@ -146,7 +154,7 @@ public class Receiver {
                 @Override
                 public void run() {
                     if (!modeSwitch.isChecked()) {
-                        button.setText("Receive");
+                        button.setText(activity.getString(R.string.receive_button));
                         button.postInvalidate();
                     }
                 }
