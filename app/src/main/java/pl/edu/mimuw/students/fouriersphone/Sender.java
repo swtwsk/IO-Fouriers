@@ -35,7 +35,7 @@ public class Sender {
             button.setText(activity.getString(R.string.receive_button));
         } else {
             editText.setText("");
-            button.setText(R.string.send_button_stop);
+            button.setText(activity.getString(R.string.send_button_stop));
             t = (new Thread (new Sender.runnable(message, activity)));
             t.start();
         }
