@@ -8,11 +8,12 @@ public class Translator {
      */
     private final static double base = 220;
     private final static String []alphabet = {
-            "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-            "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-            " ", ".", "START", "STOP"
+            "a", "i", "o", "e", "z", "n", "r", "w", "s", "t", "c", "y", "k",
+            "d", "p", "m", "u", "j", "l", "b", "g", "h", "f", "q", "v", "x",
+            " ", ".",
+            "A", "I", "O", "E", "Z", "N", "R", "W", "S", "T", "C", "Y", "K",
+            "D", "P", "M", "U", "J", "L", "B", "G", "H", "F", "Q", "V", "X",
+            "START", "STOP"
     };
 
     private static double sound(int n) {

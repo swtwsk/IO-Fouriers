@@ -137,7 +137,8 @@ public class Receiver {
                 }
                 final String translatedCharacter = Translator.ftos(getpitch());
                 final String oldCharacters = editText.getText().toString();
-                if(translatedCharacter != "OOV") {
+                if(translatedCharacter != "OOV" && translatedCharacter != "START" &&
+                        translatedCharacter != "STOP") {
 
                     editText.post(new Runnable() {
                         @Override
