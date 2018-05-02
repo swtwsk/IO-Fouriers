@@ -27,8 +27,10 @@ public class CTFFT {
     }
 
     private void fft(short []x) {
-        for (int i = 0; i < n; ++i)
+        for (int i = 0; i < n; ++i) {
             inp[i] = ((double) x[i]) / Short.MAX_VALUE;
+            out[i] = 0.;
+        }
 
         double t1, t2;
 

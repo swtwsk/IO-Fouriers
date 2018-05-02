@@ -35,6 +35,7 @@ public class Receiver {
     }
 
     private double getpitch(){
+        CTFFT fft = new CTFFT();
         int channel_config = AudioFormat.CHANNEL_IN_MONO;
         int format = AudioFormat.ENCODING_PCM_16BIT;
         int sampleSize = 8000; //8k tylko dziala na emulatorze, na urzadzeniach mozna uzyc 44100 dla lepszej jakosci
@@ -67,9 +68,13 @@ public class Receiver {
                     for(int j = 0; j < SAMPLE_TO_FFT; j++) {
                         x[j] = oldShorts.get(j);
                     }
-                    CTFFT fft = new CTFFT();
-                    frequences.add(fft.dominant(x));
-                    Log.v("receiverLogs", "Frequence: " + Double.toString(frequences.get(frequences.size() - 1)));
+                    double dom = fft.dominant(x);
+                    if (Double.isNaN(dom)) {
+                        Log.v("receiverLogs", "Frequence: failed to get");
+                    } else {
+                        frequences.add(dom);
+                        Log.v("receiverLogs", "Frequence: " + Double.toString(dom));
+                    }
                     oldShorts = new ArrayList<>();
                 }
             }
