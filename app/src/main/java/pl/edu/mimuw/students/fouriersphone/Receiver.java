@@ -1,24 +1,19 @@
 package pl.edu.mimuw.students.fouriersphone;
-import android.Manifest;
 import android.app.Activity;
-import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
-import android.os.SystemClock;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import static java.util.Collections.reverseOrder;
+import pl.edu.mimuw.students.fouriersphone.SoundAnalyzer.AnalyzeSound;
 
 
 public class Receiver {
@@ -26,19 +21,25 @@ public class Receiver {
     final Switch modeSwitch;
     final EditText editText;
     final Button button;
-
-    public Receiver(Activity activity) {
+    final Handler handler;
+    public Receiver(Activity activity, Handler handler) {
+        this.handler = handler;
         this.activity = activity;
         editText = activity.findViewById(R.id.editText);
         button = activity.findViewById(R.id.button);
         modeSwitch = activity.findViewById(R.id.modeSwitch);
     }
 
-    private double getpitch(){
+    private void getpitch(){
+
+        double frequencies[] = Translator.getFrequencies();
+
+
+
         int channel_config = AudioFormat.CHANNEL_IN_MONO;
         int format = AudioFormat.ENCODING_PCM_16BIT;
-        int sampleSize = 8000; //8k tylko dziala na emulatorze, na urzadzeniach mozna uzyc 44100 dla lepszej jakosci
-        Log.d("receiverLogs", "sampleSize = " + Integer.toString(sampleSize));
+        int sampleSize = 44100; //8k tylko dziala na emulatorze, na urzadzeniach mozna uzyc 44100 dla lepszej jakosci
+        //Log.d("receiverLogs", "sampleSize = " + Integer.toString(sampleSize));
         int bufferSize = AudioRecord.getMinBufferSize(sampleSize, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
         AudioRecord audioInput = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleSize, channel_config, format, bufferSize);
 
@@ -46,55 +47,64 @@ public class Receiver {
 
         audioInput.startRecording();
 
-        boolean shouldContinue = true;
+        int SAMPLE_TO_FFT = 4096;
 
-        int totalShortsRead = 0;
-
-        List<Double> frequences = new ArrayList<>();
-
-        int SAMPLE_TO_FFT = 1024;
+        int FIND_AMOUNT = 5;
 
         List <Short> oldShorts = new ArrayList<>();
 
+        List <Double> results = new ArrayList<>();
 
-        while(shouldContinue) {
+
+        while(!Thread.currentThread().isInterrupted()) {
             int shortsRead = audioInput.read(audioBuffer, 0, audioBuffer.length);
-
-            for(int i = 0; i < shortsRead && totalShortsRead > 0; i++) {
+            for(int i = 0; i < shortsRead; i++) {
                 oldShorts.add(audioBuffer[i]);
                 if(oldShorts.size() == SAMPLE_TO_FFT) {
                     short[] x = new short[SAMPLE_TO_FFT];
                     for(int j = 0; j < SAMPLE_TO_FFT; j++) {
                         x[j] = oldShorts.get(j);
                     }
-                    CTFFT fft = new CTFFT();
-                    frequences.add(fft.dominant(x));
-                    Log.v("receiverLogs", "Frequence: " + Double.toString(frequences.get(frequences.size() - 1)));
+                    AnalyzeSound as = new AnalyzeSound();
+                    Double frequency = as.analyze(x, frequencies);
+
                     oldShorts = new ArrayList<>();
+
+                    results.add(frequency);
+
+                    if(results.size() == FIND_AMOUNT) {
+                        double lider = results.get(FIND_AMOUNT / 2);
+                        int count = 0;
+                        for(double f: results) {
+                            if(f == lider) count++;
+                        }
+                        if(count >= (FIND_AMOUNT + 1) / 2) {
+                            Message msg = new Message();
+                            msg.obj = Double.toString(lider);
+                            msg.what = Constants.RECEIVED_MESSAGE_IS_FREQUENCY;
+                            handler.sendMessage(msg);
+                        }
+                        results.remove(0);
+                    }
+
+
                 }
             }
-
-            totalShortsRead += shortsRead;
-            if(totalShortsRead > sampleSize) {
-                shouldContinue = false;
-            }
-
         }
 
         audioInput.stop();
         audioInput.release();
+    }
 
-        Collections.sort(frequences, new Comparator<Double>() {
-            @Override
-            public int compare(Double lhs, Double rhs) {
-                // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-                return lhs < rhs ? -1 : (lhs > rhs) ? 1 : 0;
+    public void stop() {
+        if(t != null && t.isAlive()) {
+            t.interrupt();
+            try {
+                t.join();
+            } catch(InterruptedException  e) {
+                Log.v("exception", "InterruptedException");
             }
-        });
-        if(frequences.size() == 0) {
-            return Double.NaN;
-        } else {
-            return frequences.get(frequences.size() / 2);
+            button.setText(activity.getString(R.string.receive_button));
         }
     }
 
@@ -131,26 +141,9 @@ public class Receiver {
         @Override
         public void run() {
             Log.v("receiverLogs", "Started Runnable");
-            for(;;) {
-                if(Thread.currentThread().isInterrupted()) {
-                    break;
-                }
-                final String translatedCharacter = Translator.ftos(getpitch());
-                final String oldCharacters = editText.getText().toString();
-                if(translatedCharacter != "OOV" && translatedCharacter != "START" &&
-                        translatedCharacter != "STOP") {
 
-                    editText.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            editText.setText(oldCharacters + translatedCharacter);
-                            editText.postInvalidate();
-                        }
-                    });
+            getpitch();
 
-                }
-
-            }
             button.post(new Runnable() {
                 @Override
                 public void run() {
