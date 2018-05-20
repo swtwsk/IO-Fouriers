@@ -1,4 +1,4 @@
-package pl.edu.mimuw.students.fouriersphone;
+package pl.edu.mimuw.students.fouriersphone.SoundAnalyzer;
 
 public class CTFFT {
     // n = 2^m = size of input tables
@@ -103,6 +103,6 @@ public class CTFFT {
             dom = max / (out[maxi] + out[maxi + 1]);
         }
 
-        return 44100.0 * dom / n / 5.5;
+        return 44100.0 * dom / n;
     }
 }

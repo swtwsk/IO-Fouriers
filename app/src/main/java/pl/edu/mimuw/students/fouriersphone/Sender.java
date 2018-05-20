@@ -22,6 +22,18 @@ public class Sender {
         modeSwitch = activity.findViewById(R.id.modeSwitch);
     }
 
+    public void stop() {
+        if(t != null && t.isAlive()) {
+            t.interrupt();
+            try {
+                t.join();
+            } catch(InterruptedException  e) {
+                Log.v("exception", "InterruptedException");
+            }
+            button.setText(activity.getString(R.string.receive_button));
+        }
+    }
+
     public void start(String message) {
         Log.d("debug", message);
 
@@ -48,11 +60,12 @@ public class Sender {
      * Function playing sound from internet for testing purposes
      * Source: http://programminglife.io/generating-sine-wave-sound-with-android/
      * @param frequency frequency of sound
-     * @param duration duration of sound
+     * @param _duration duration of sound
      */
-    private void playSound(double frequency, int duration) {
-        duration *= 44100;
+    private void playSound(double frequency, double _duration) {
+        int duration = (int)(_duration * 44100);
         // AudioTrack definition
+
         int mBufferSize = AudioTrack.getMinBufferSize(44100,
                 AudioFormat.CHANNEL_OUT_MONO,
                 AudioFormat.ENCODING_PCM_16BIT);
@@ -68,6 +81,7 @@ public class Sender {
             mSound[i] = Math.sin((2.0*Math.PI * i/(44100/frequency)));
             mBuffer[i] = (short) (mSound[i]*Short.MAX_VALUE);
         }
+
 
         mAudioTrack.setVolume(AudioTrack.getMaxVolume());
         mAudioTrack.play();
@@ -91,7 +105,8 @@ public class Sender {
                 if(Thread.currentThread().isInterrupted()) {
                     break;
                 }
-                playSound(Translator.stof("" + message.charAt(i)), 1);
+                playSound(Translator.stof("NEXT"), 0.5);
+                playSound(Translator.stof("" + message.charAt(i)), 0.5);
             }
 
             button.post(new Runnable() {

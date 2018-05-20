@@ -3,6 +3,9 @@ package pl.edu.mimuw.students.fouriersphone;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.support.v4.content.ContextCompat;
+import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -19,14 +23,48 @@ public class MainActivity extends AppCompatActivity {
     Button button;
     Receiver r;
     Sender s;
+
+    Handler handler;
+    boolean nextIsOk = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        handler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                if(msg.what == Constants.RECEIVED_MESSAGE_IS_FREQUENCY) {
+                    TextView frequency = (TextView) findViewById(R.id.frequency);
+                    String s = (String)msg.obj;
+                    frequency.setText((String) msg.obj);
+
+                    Double f = new Double((String) msg.obj);
+                    if(f > 0.1) {
+                        EditText editText = findViewById(R.id.editText);
+                        final String translatedCharacter = Translator.ftos(f);
+                        final String oldCharacters = editText.getText().toString();
+                        if(     translatedCharacter != "OOV" &&
+                                translatedCharacter != "START" &&
+                                translatedCharacter != "STOP") {
+                            if(translatedCharacter == "NEXT") {
+                                nextIsOk = true;
+                            } else if(nextIsOk) {
+                                editText.setText(oldCharacters + translatedCharacter);
+                                nextIsOk = false;
+                            }
+                        }
+                    }
+                } else {
+                    super.handleMessage(msg);
+                }
+            }
+        };
+
         modeSwitch = findViewById(R.id.modeSwitch);
 
-        r = new Receiver(this);
+        r = new Receiver(this, handler);
         s = new Sender(this);
 
         button = findViewById(R.id.button);
@@ -86,5 +124,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();  // Always call the superclass method first
+        s.stop();
+        r.stop();
     }
 }
