@@ -18,6 +18,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import pl.edu.mimuw.students.fouriersphone.SoundAnalyzer.CTFFT;
+
 import static java.util.Collections.reverseOrder;
 
 
