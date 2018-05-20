@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.edu.mimuw.students.fouriersphone.SoundAnalyzer.AnalyzeSound;
+import pl.edu.mimuw.students.fouriersphone.SoundAnalyzer.CTFFT;
+import static java.util.Collections.reverseOrder;
 
 
 public class Receiver {

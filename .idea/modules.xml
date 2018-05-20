@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/IO-Fouriers.iml" filepath="$PROJECT_DIR$/IO-Fouriers.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/appp.iml" filepath="$PROJECT_DIR$/appp.iml" />
+      <module fileurl="file://C:\Users\Wojtek\AndroidStudioProjects\IO-Fouriers\appp.iml" filepath="C:\Users\Wojtek\AndroidStudioProjects\IO-Fouriers\appp.iml" />
     </modules>
   </component>
 </project>
