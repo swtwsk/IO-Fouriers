@@ -9,8 +9,8 @@
 \usepackage{graphicx}
 \usepackage[bookmarks=true,hidelinks]{hyperref}
 %  \newcommand{\sectionbreak}{\clearpage}
-\newcommand{\documentdate}{17 maja 2018}
-\newcommand{\documentversion}{ver. 1.0}
+\newcommand{\documentdate}{21 maja 2018}
+\newcommand{\documentversion}{ver. 1.1}
 
 \graphicspath{ {/} }
 
@@ -58,6 +58,11 @@ i~\textit{ftos} z~klasy Translator. \par
 Klasa Receiver korzysta z~klas i~metod umieszczonych w~wewnętrznej paczce
 \textit{soundanalyzer}. Wewnętrzna implementacja korzysta z~algorytmów
 operujących na dźwiękach i~funkcjach fal, takich jak FFT. \par
+Aplikacja oprócz trybu wysyłania tekstu oferuje także tryb wysyłania plików.
+Do operacji na plikach zostanie wykorzystana osobna klasa, FileTranslator, która
+to oferować będzie publiczne metody \textit{prepareFile} (do wysyłania pliku)
+oraz \textit{saveFile} (do tłumaczenia odebranych przez aplikację znaków na
+binarną reprezentację pliku). \par
 \vspace{5mm}
 \includegraphics[width=\textwidth]{app_uml.png}
 
