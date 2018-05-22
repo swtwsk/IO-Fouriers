@@ -33,11 +33,8 @@ public class Receiver {
     }
 
     private void getpitch(){
-
         double frequencies[] = Translator.getFrequencies();
-
-
-
+        CTFFT fft = new CTFFT();
         int channel_config = AudioFormat.CHANNEL_IN_MONO;
         int format = AudioFormat.ENCODING_PCM_16BIT;
         int sampleSize = 44100; //8k tylko dziala na emulatorze, na urzadzeniach mozna uzyc 44100 dla lepszej jakosci
@@ -69,7 +66,6 @@ public class Receiver {
                     }
                     AnalyzeSound as = new AnalyzeSound();
                     Double frequency = as.analyze(x, frequencies);
-
                     oldShorts = new ArrayList<>();
 
                     results.add(frequency);
