@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         modeSwitch = findViewById(R.id.modeSwitch);
 
-        r = new Receiver(this);
+        r = new Receiver(this, handler);
         s = new Sender(this);
 
         button = findViewById(R.id.button);
@@ -130,6 +130,6 @@ public class MainActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();  // Always call the superclass method first
         s.stop();
-        //r.stop();
+        r.stop();
     }
 }
