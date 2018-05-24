@@ -76,7 +76,6 @@ W~trosce tak o~wydajność rozwiązania, jak i~poprawność odbieranych danych n
 skorzystać z~odpowiednich algorytmów. \par
 Podstawowym algorytmem z~jakiego aplikacja będzie korzystać (skąd wynika także
 jej nazwa) jest FFT - Szybka Transformata Fouriera. Ponieważ algorytm jest dobrze znany i krótki, zastosujemy własną implementację (działającą w~$O(n\log{}n)$). Zmniejsza to ilość wykorzystywanych bibliotek, a co za tym idzie także rozmiar aplikacji. Pozwala też na większą kontrolę nad szczegółami technicznymi, takimi jak format danych. \par
-Prócz tego zakłada się wykorzystanie innych algorytmów (takich jak autokorelacja), które przyspieszą
-działanie aplikacji oraz zapewnią jej niezawodność lub też radykalnie obniżą
-prawdopodobieństwo błędu. Wybór, ewentualna implementacja i przetestowanie tych rozwiązań wchodzi w zakres obowiązków programistów.
+Pomocniczym algorytmem wykorzystywanym do wykrywania niższych częstotliwości z którymi nie radzi sobie FFT jest algorytm obliczający autokorelację.
+Prócz tego do obowiązków programistów należy rozwój i optymalizacja sposobów analizowania odbieranych danych dźwiękowych w celu przyspieszenia przesyłu oraz zminimalizowania możliwości wystąpienia błędu.
 \end{document}
