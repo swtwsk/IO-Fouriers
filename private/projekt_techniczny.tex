@@ -74,10 +74,9 @@ z~metod i~funkcjonalności, które pojawiły się dopiero w tej wersji API.
 \section{Algorytmy}
 W~trosce tak o~wydajność rozwiązania, jak i~poprawność odbieranych danych należy
 skorzystać z~odpowiednich algorytmów. \par
-Podstawowym algorytmem, z~jakiego aplikacja będzie korzystać (skąd wynika także
-jej nazwa) jest FFT - Szybka Transformata Fouriera i~jej najpopularniejsze
-implementacje i~modyfikacje (działające chociażby w~$O(n\log{}n)$). \par
-Prócz tego zakłada się wykorzystanie innych algorytmów, które przyspieszą
+Podstawowym algorytmem z~jakiego aplikacja będzie korzystać (skąd wynika także
+jej nazwa) jest FFT - Szybka Transformata Fouriera. Ponieważ algorytm jest dobrze znany i krótki, zastosujemy własną implementację (działającą w~$O(n\log{}n)$). Zmniejsza to ilość wykorzystywanych bibliotek, a co za tym idzie także rozmiar aplikacji. Pozwala też na większą kontrolę nad szczegółami technicznymi, takimi jak format danych. \par
+Prócz tego zakłada się wykorzystanie innych algorytmów (takich jak autokorelacja), które przyspieszą
 działanie aplikacji oraz zapewnią jej niezawodność lub też radykalnie obniżą
-prawdopodobieństwo błędu. Jednym z~takich algorytmów jest autokorelacja.
+prawdopodobieństwo błędu. Wybór, ewentualna implementacja i przetestowanie tych rozwiązań wchodzi w zakres obowiązków programistów.
 \end{document}
