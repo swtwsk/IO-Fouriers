@@ -12,15 +12,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.support.v4.content.ContextCompat;
 import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity {
+    AppState state;
+    Button button_act;
+    Button button_set_mode_text;
+    Button button_set_mode_file;
+    Button button_set_mode_send;
+    Button button_set_mode_hear;
+    EditText editText;
 
-    Switch modeSwitch;
-    Button button;
     Receiver r;
     Sender s;
 
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 if(msg.what == Constants.RECEIVED_MESSAGE_IS_FREQUENCY) {
-                    TextView frequency = (TextView) findViewById(R.id.frequency);
+                    TextView frequency = findViewById(R.id.frequency);
                     String s = (String)msg.obj;
                     frequency.setText((String) msg.obj);
 
@@ -44,14 +48,13 @@ public class MainActivity extends AppCompatActivity {
                     if(f > 0.1) {
                         EditText editText = findViewById(R.id.editText);
                         final String translatedCharacter = Translator.ftos(f);
-                        final String oldCharacters = editText.getText().toString();
                         if(     translatedCharacter != "OOV" &&
                                 translatedCharacter != "START" &&
                                 translatedCharacter != "STOP") {
                             if(translatedCharacter == "NEXT") {
                                 nextIsOk = true;
                             } else if(nextIsOk) {
-                                editText.setText(oldCharacters + translatedCharacter);
+                                editText.append(translatedCharacter);
                                 nextIsOk = false;
                             }
                         }
@@ -62,48 +65,64 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        modeSwitch = findViewById(R.id.modeSwitch);
+        button_act = findViewById(R.id.main_act);
+        button_set_mode_text = findViewById(R.id.select_text);
+        button_set_mode_file = findViewById(R.id.select_file);
+        button_set_mode_send = findViewById(R.id.select_send);
+        button_set_mode_hear = findViewById(R.id.select_hear);
+        editText = findViewById(R.id.editText);
 
-        r = new Receiver(this, handler);
-        s = new Sender(this);
+        state = new AppState();
+        r = new Receiver(this, handler, state);
+        s = new Sender(this, state);
 
-        button = findViewById(R.id.button);
-        if (modeSwitch.isChecked()) {
-            button.setText(getString(R.string.send_button));
+        if (state.mode_send) {
+            button_act.setText(getString(R.string.send_button));
         }
         else {
-            button.setText(getString(R.string.receive_button));
+            button_act.setText(getString(R.string.receive_button));
         }
 
-        modeSwitch.setOnClickListener(new View.OnClickListener() {
+        button_set_mode_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (modeSwitch.isChecked()) {
-                    if(s.isAlive()) {
-                        button.setText(getString(R.string.send_button_stop));
-                    }
-                    else {
-                        button.setText(getString(R.string.send_button));
-                    }
-                }
-                else {
-                    if(r.isAlive()) {
-                        button.setText(getString(R.string.receive_button_stop));
-                    }
-                    else {
-                        button.setText(getString(R.string.receive_button));
-                    }
-                }
+                state.mode_send = true;
+                refresh_button_act();
+            }
+        });
+
+        button_set_mode_hear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                state.mode_send = false;
+                refresh_button_act();
             }
         });
     }
 
-
+    public void refresh_button_act() {
+        if (state.mode_send) {
+            if(s.isAlive()) {
+                button_act.setText(getString(R.string.send_button_stop));
+            }
+            else {
+                button_act.setText(getString(R.string.send_button));
+            }
+        }
+        else {
+            if(r.isAlive()) {
+                button_act.setText(getString(R.string.receive_button_stop));
+            }
+            else {
+                button_act.setText(getString(R.string.receive_button));
+            }
+        }
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void clickDoButton(View view) {
         EditText editText = findViewById(R.id.editText);
-        if (modeSwitch.isChecked()) {
+        if (state.mode_send) {
             String message = editText.getText().toString();
             s.start(message);
         }

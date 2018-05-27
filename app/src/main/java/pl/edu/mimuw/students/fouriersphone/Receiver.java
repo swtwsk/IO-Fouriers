@@ -20,16 +20,17 @@ import static java.util.Collections.reverseOrder;
 
 public class Receiver {
     final Activity activity;
-    final Switch modeSwitch;
     final EditText editText;
-    final Button button;
+    final AppState state;
+    final Button button_act;
     final Handler handler;
-    public Receiver(Activity activity, Handler handler) {
+
+    public Receiver(Activity activity, Handler handler, AppState state) {
         this.handler = handler;
         this.activity = activity;
+        this.state = state;
         editText = activity.findViewById(R.id.editText);
-        button = activity.findViewById(R.id.button);
-        modeSwitch = activity.findViewById(R.id.modeSwitch);
+        button_act = activity.findViewById(R.id.main_act);
     }
 
     private void getpitch(){
@@ -102,7 +103,7 @@ public class Receiver {
             } catch(InterruptedException  e) {
                 Log.v("exception", "InterruptedException");
             }
-            button.setText(activity.getString(R.string.receive_button));
+            button_act.setText(activity.getString(R.string.receive_button));
         }
     }
 
@@ -116,10 +117,10 @@ public class Receiver {
             } catch(InterruptedException  e) {
                 Log.v("exception", "InterruptedException");
             }
-            button.setText(activity.getString(R.string.receive_button));
+            button_act.setText(activity.getString(R.string.receive_button));
         } else {
             editText.setText("");
-            button.setText(activity.getString(R.string.receive_button_stop));
+            button_act.setText(activity.getString(R.string.receive_button_stop));
             t = (new Thread (new runnable(activity)));
             t.start();
         }
@@ -142,12 +143,12 @@ public class Receiver {
 
             getpitch();
 
-            button.post(new Runnable() {
+            button_act.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (!modeSwitch.isChecked()) {
-                        button.setText(activity.getString(R.string.receive_button));
-                        button.postInvalidate();
+                    if (!state.mode_send) {
+                        button_act.setText(activity.getString(R.string.receive_button));
+                        button_act.postInvalidate();
                     }
                 }
             });

@@ -7,19 +7,19 @@ import android.media.AudioTrack;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 
 public class Sender {
     final Activity activity;
-    final Switch modeSwitch;
     final EditText editText;
-    final Button button;
+    final Button button_act;
+    final AppState state;
+
     Thread t;
-    public Sender(Activity activity) {
+    public Sender(Activity activity, AppState state) {
         this.activity = activity;
+        this.state = state;
         editText = activity.findViewById(R.id.editText);
-        button = activity.findViewById(R.id.button);
-        modeSwitch = activity.findViewById(R.id.modeSwitch);
+        button_act = activity.findViewById(R.id.main_act);
     }
 
     public void stop() {
@@ -30,7 +30,7 @@ public class Sender {
             } catch(InterruptedException  e) {
                 Log.v("exception", "InterruptedException");
             }
-            button.setText(activity.getString(R.string.receive_button));
+            button_act.setText(activity.getString(R.string.receive_button));
         }
     }
 
@@ -44,10 +44,10 @@ public class Sender {
             } catch(InterruptedException  e) {
                 Log.v("exception", "InterruptedException");
             }
-            button.setText(activity.getString(R.string.receive_button));
+            button_act.setText(activity.getString(R.string.receive_button));
         } else {
             editText.setText("");
-            button.setText(activity.getString(R.string.send_button_stop));
+            button_act.setText(activity.getString(R.string.send_button_stop));
             t = (new Thread (new Sender.runnable(message, activity)));
             t.start();
         }
@@ -109,12 +109,12 @@ public class Sender {
                 playSound(Translator.stof("" + message.charAt(i)), 0.5);
             }
 
-            button.post(new Runnable() {
+            button_act.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (modeSwitch.isChecked()) {
-                        button.setText(activity.getString(R.string.send_button));
-                        button.postInvalidate();
+                    if (state.mode_send) {
+                        button_act.setText(activity.getString(R.string.send_button));
+                        button_act.postInvalidate();
                     }
                 }
             });
