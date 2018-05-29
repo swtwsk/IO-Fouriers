@@ -19,6 +19,8 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     AppState state;
     Button button_act;
+    Button button_send_file;
+    Button button_receive_file;
     Button button_set_mode_text;
     Button button_set_mode_file;
     Button button_set_mode_send;
@@ -66,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         };
 
         button_act = findViewById(R.id.main_act);
+        button_send_file = findViewById(R.id.send_file);
+        button_receive_file = findViewById(R.id.receive_file);
         button_set_mode_text = findViewById(R.id.select_text);
         button_set_mode_file = findViewById(R.id.select_file);
         button_set_mode_send = findViewById(R.id.select_send);
@@ -88,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 state.mode_send = true;
                 refresh_button_act();
+                refresh_body();
             }
         });
 
@@ -96,6 +101,25 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 state.mode_send = false;
                 refresh_button_act();
+                refresh_body();
+            }
+        });
+
+        button_set_mode_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                state.mode_text = true;
+                refresh_button_act();
+                refresh_body();
+            }
+        });
+
+        button_set_mode_file.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                state.mode_text = false;
+                refresh_button_act();
+                refresh_body();
             }
         });
     }
@@ -115,6 +139,23 @@ public class MainActivity extends AppCompatActivity {
             }
             else {
                 button_act.setText(getString(R.string.receive_button));
+            }
+        }
+    }
+
+    public void refresh_body() {
+        button_receive_file.setVisibility(View.INVISIBLE);
+        button_send_file.setVisibility(View.INVISIBLE);
+        editText.setVisibility(View.INVISIBLE);
+        if (state.mode_text) {
+            editText.setVisibility(View.VISIBLE);
+        }
+        else {
+            if(state.mode_send) {
+                button_send_file.setVisibility(View.VISIBLE);
+            }
+            else {
+                button_receive_file.setVisibility(View.VISIBLE);
             }
         }
     }
