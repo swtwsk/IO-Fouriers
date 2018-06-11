@@ -9,11 +9,16 @@ import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.support.v4.content.ContextCompat;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.io.File;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     Button button_set_mode_send;
     Button button_set_mode_hear;
     EditText editText;
+    EditText file_name;
+    Spinner downloads_spinner;
 
     Receiver r;
     Sender s;
@@ -75,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
         button_set_mode_send = findViewById(R.id.select_send);
         button_set_mode_hear = findViewById(R.id.select_hear);
         editText = findViewById(R.id.editText);
+        file_name = findViewById(R.id.file_name);
+        downloads_spinner = findViewById(R.id.downloads_spinner);
 
         state = new AppState();
         r = new Receiver(this, handler, state);
@@ -86,6 +95,14 @@ public class MainActivity extends AppCompatActivity {
         else {
             button_act.setText(getString(R.string.receive_button));
         }
+
+        button_receive_file.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FileTranslator.saveFile(file_name.getText().toString(),
+                                        editText.getText().toString());
+            }
+        });
 
         button_set_mode_send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,15 +164,21 @@ public class MainActivity extends AppCompatActivity {
         button_receive_file.setVisibility(View.INVISIBLE);
         button_send_file.setVisibility(View.INVISIBLE);
         editText.setVisibility(View.INVISIBLE);
+        file_name.setVisibility(View.INVISIBLE);
+        downloads_spinner.setVisibility(View.INVISIBLE);
         if (state.mode_text) {
             editText.setVisibility(View.VISIBLE);
         }
         else {
             if(state.mode_send) {
+                ArrayAdapter<String> adapter = new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item, FileTranslator.getDownloadsFiles());
+                downloads_spinner.setAdapter(adapter);
                 button_send_file.setVisibility(View.VISIBLE);
+                downloads_spinner.setVisibility(View.VISIBLE);
             }
             else {
                 button_receive_file.setVisibility(View.VISIBLE);
+                file_name.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -164,7 +187,17 @@ public class MainActivity extends AppCompatActivity {
     public void clickDoButton(View view) {
         EditText editText = findViewById(R.id.editText);
         if (state.mode_send) {
-            String message = editText.getText().toString();
+            String message;
+            if (state.mode_text) {
+                message = editText.getText().toString();
+            } else {
+                char []cont = new char[1024];
+                int ret = FileTranslator.prepareFile(downloads_spinner.getSelectedItem().toString() , cont, 1024);
+                if (ret == -1)
+                    message = ""; // empty file
+                else
+                    message = new String(cont, 0, ret);
+            }
             s.start(message);
         }
         else {

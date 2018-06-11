@@ -49,7 +49,8 @@ public class FileTranslator {
      * are in .txt format.
      * @return array of Strings - names of .txt format files in Downloads
      */
-    public static String[] getDownloadsFiles() {
+    public static ArrayList<String> getDownloadsFiles() {
+        Log.d("File","Getting download files from " + Environment.DIRECTORY_DOWNLOADS);
         String formatEnding = ".txt";
 
         File downloads = Environment.getExternalStoragePublicDirectory(
@@ -67,12 +68,7 @@ public class FileTranslator {
                 }
             }
         }
-        String[] goodFilesArray = goodFiles.toArray(new String[goodFiles.size()]);
-        Log.d("File", "It's a list of good files");
-        for (String file : goodFilesArray) {
-            Log.d("File", file);
-        }
-        return goodFilesArray;
+        return goodFiles;
     }
 
     /**
@@ -107,7 +103,9 @@ public class FileTranslator {
      * @param cbuf array of chars function puts read chars into
      * @return number of read chars or -1 in case of error
      */
-    public static int prepareFile(String fileName, char[] cbuf) {
+    public static int prepareFile(String fileName, char[] cbuf, int count) {
+        Log.d("File", "Attempting to open file " + fileName);
+
         if (!isExternalStorageReadable()) {
             Log.e("File", "Error - external storage is not readable");
             return -1;
@@ -129,7 +127,11 @@ public class FileTranslator {
         }
 
         try {
-            return reader.read(cbuf);
+            int ret = reader.read(cbuf, 0, count);
+            if (ret == -1) {
+                Log.d("File", "File empty");
+            }
+            return ret;
         } catch (IOException e) {
             Log.e("File", "Exception in read");
             return -1;
@@ -152,6 +154,8 @@ public class FileTranslator {
         }
 
         File file = getPublicDownloadDir(fileName);
+        if (file == null) return false;
+
         FileOutputStream stream = null;
         boolean wasError = false;
 
