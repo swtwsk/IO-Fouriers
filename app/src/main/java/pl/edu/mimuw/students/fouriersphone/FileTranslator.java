@@ -103,7 +103,9 @@ public class FileTranslator {
      * @param cbuf array of chars function puts read chars into
      * @return number of read chars or -1 in case of error
      */
-    public static int prepareFile(String fileName, char[] cbuf) {
+    public static int prepareFile(String fileName, char[] cbuf, int count) {
+        Log.d("File", "Attempting to open file " + fileName);
+
         if (!isExternalStorageReadable()) {
             Log.e("File", "Error - external storage is not readable");
             return -1;
@@ -125,7 +127,11 @@ public class FileTranslator {
         }
 
         try {
-            return reader.read(cbuf);
+            int ret = reader.read(cbuf, 0, count);
+            if (ret == -1) {
+                Log.d("File", "File empty");
+            }
+            return ret;
         } catch (IOException e) {
             Log.e("File", "Exception in read");
             return -1;
@@ -148,6 +154,8 @@ public class FileTranslator {
         }
 
         File file = getPublicDownloadDir(fileName);
+        if (file == null) return false;
+
         FileOutputStream stream = null;
         boolean wasError = false;
 

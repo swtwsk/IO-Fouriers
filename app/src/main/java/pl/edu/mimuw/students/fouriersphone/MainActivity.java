@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -191,8 +192,11 @@ public class MainActivity extends AppCompatActivity {
                 message = editText.getText().toString();
             } else {
                 char []cont = new char[1024];
-                FileTranslator.prepareFile(file_name.getText().toString(), cont);
-                message = new String(cont);
+                int ret = FileTranslator.prepareFile(downloads_spinner.getSelectedItem().toString() , cont, 1024);
+                if (ret == -1)
+                    message = ""; // empty file
+                else
+                    message = new String(cont, 0, ret);
             }
             s.start(message);
         }
