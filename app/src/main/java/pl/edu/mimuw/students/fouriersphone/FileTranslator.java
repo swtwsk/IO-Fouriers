@@ -49,7 +49,8 @@ public class FileTranslator {
      * are in .txt format.
      * @return array of Strings - names of .txt format files in Downloads
      */
-    public static String[] getDownloadsFiles() {
+    public static ArrayList<String> getDownloadsFiles() {
+        Log.d("File","Getting download files from " + Environment.DIRECTORY_DOWNLOADS);
         String formatEnding = ".txt";
 
         File downloads = Environment.getExternalStoragePublicDirectory(
@@ -67,12 +68,7 @@ public class FileTranslator {
                 }
             }
         }
-        String[] goodFilesArray = goodFiles.toArray(new String[goodFiles.size()]);
-        Log.d("File", "It's a list of good files");
-        for (String file : goodFilesArray) {
-            Log.d("File", file);
-        }
-        return goodFilesArray;
+        return goodFiles;
     }
 
     /**
