@@ -1,6 +1,7 @@
 package pl.edu.mimuw.students.fouriersphone;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
@@ -18,7 +19,6 @@ import android.support.v4.content.ContextCompat;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.io.File;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -48,19 +48,17 @@ public class MainActivity extends AppCompatActivity {
         handler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
-                if(msg.what == Constants.RECEIVED_MESSAGE_IS_FREQUENCY) {
+                if (msg.what == Constants.RECEIVED_MESSAGE_IS_FREQUENCY) {
                     TextView frequency = findViewById(R.id.frequency);
-                    String s = (String)msg.obj;
                     frequency.setText((String) msg.obj);
-
-                    Double f = new Double((String) msg.obj);
-                    if(f > 0.1) {
+                    Double f = Double.valueOf((String) msg.obj);
+                    if (f > 0.1) {
                         EditText editText = findViewById(R.id.editText);
                         final String translatedCharacter = Translator.ftos(f);
-                        if(     translatedCharacter != "OOV" &&
-                                translatedCharacter != "START" &&
-                                translatedCharacter != "STOP") {
-                            if(translatedCharacter == "NEXT") {
+                        if (!translatedCharacter.equals("OOV") &&
+                            !translatedCharacter.equals("START") &&
+                            !translatedCharacter.equals("STOP")) {
+                            if (translatedCharacter.equals("NEXT")) {
                                 nextIsOk = true;
                             } else if(nextIsOk) {
                                 editText.append(translatedCharacter);
@@ -99,8 +97,11 @@ public class MainActivity extends AppCompatActivity {
         button_receive_file.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FileTranslator.saveFile(file_name.getText().toString(),
+                boolean ret = FileTranslator.saveFile(file_name.getText().toString(),
                                         editText.getText().toString());
+                if (!ret) {
+                    Log.e("Main", "file save failed");
+                }
             }
         });
 
@@ -171,7 +172,11 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             if(state.mode_send) {
-                ArrayAdapter<String> adapter = new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item, FileTranslator.getDownloadsFiles());
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        this,
+                        R.layout.support_simple_spinner_dropdown_item,
+                        FileTranslator.getDownloadsFiles()
+                );
                 downloads_spinner.setAdapter(adapter);
                 button_send_file.setVisibility(View.VISIBLE);
                 downloads_spinner.setVisibility(View.VISIBLE);
@@ -183,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void clickDoButton(View view) {
         EditText editText = findViewById(R.id.editText);
@@ -201,12 +207,12 @@ public class MainActivity extends AppCompatActivity {
             s.start(message);
         }
         else {
-
-            String premissions[] = {Manifest.permission.RECORD_AUDIO};
-            requestPermissions(premissions, 1);
+            String permissions[] = {Manifest.permission.RECORD_AUDIO};
+            requestPermissions(permissions, 1);
 
             String permission = android.Manifest.permission.RECORD_AUDIO;
-            int res = MainActivity.this.checkCallingOrSelfPermission(permission);
+            MainActivity.this.enforceCallingOrSelfPermission(permission, "No enough permissions!");
+
             if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.RECORD_AUDIO)
                     == PackageManager.PERMISSION_GRANTED) {
                 r.start();

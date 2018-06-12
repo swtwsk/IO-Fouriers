@@ -8,14 +8,12 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Switch;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import pl.edu.mimuw.students.fouriersphone.SoundAnalyzer.AnalyzeSound;
 import pl.edu.mimuw.students.fouriersphone.SoundAnalyzer.CTFFT;
-import static java.util.Collections.reverseOrder;
 
 
 public class Receiver {
@@ -35,7 +33,6 @@ public class Receiver {
 
     private void getpitch(){
         double frequencies[] = Translator.getFrequencies();
-        CTFFT fft = new CTFFT();
         int channel_config = AudioFormat.CHANNEL_IN_MONO;
         int format = AudioFormat.ENCODING_PCM_16BIT;
         int sampleSize = 44100; //8k tylko dziala na emulatorze, na urzadzeniach mozna uzyc 44100 dla lepszej jakosci
